@@ -13,10 +13,7 @@ export default class Tictactoe {
             for (var i = 0; i < base.axes; i++) {
                 this.game[i] = ['', '', ''];
             }
-            console.log('inside setup: ', this.game);
 
-            // Populate with first "X"
-            this.fillSpace('x');
             resolve(this.game);
         });
     }
@@ -71,29 +68,29 @@ export default class Tictactoe {
     }
 
     fillSpace(val, col, row) {
-        // If no row or col, generate random
-        if (typeof(row) != 'number' || row === null) {
+        // If no row or col specified, place in random
+        if (row === undefined) {
             row = Math.floor(Math.random() * Math.floor(this.game.length));
         }
-        if (typeof(col) != 'number' || col === null) {
+        if (col === undefined) {
             col = Math.floor(Math.random() * this.game[row].length);
         }
  
-        console.log(`Val: ${val}, Col: ${col}, Row: ${row}`);
-
         // If empty space, populate with "X" or "O"
-        if (this.game[col][row] == '')  {
-            this.game[col][row] = val;
-        } else if (this.game[col][row] === 'x' || this.game[col][row] === 'o'){
-            console.log('Try again, this space taken');
-            this.fillSpace(val);
+        if (this.game[row][col] == '')  {
+            this.game[row][col] = val;
+        } else if (this.game[row][col] === 'x' || this.game[row][col] === 'o'){
+            console.log('Hey tricky, no changing your entries. Let\'s play again.');
+            // TODO
+            this.setup();
         }
 
-        // this.isWinner(val);
+        this.isWinner(val);
 
-        return new Promise (resolve => {
-            resolve(this.game);
-        });
+        return [col, row];
+        // return new Promise (resolve => {
+        //     resolve(this.game);
+        // });
     }
 
 }   
