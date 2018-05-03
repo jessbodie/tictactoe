@@ -6,25 +6,39 @@ import * as base from './views/base';
 
 const state = {};
 
-// TODO ASYNC AWAIT
 const controlPlay = async () => {
 
     state.tictactoe = new Tictactoe();
     // const allSpaces = state.tictactoe;
 
-    // Get input
+    // Get user's "O" input
     const getInput = (el) => {
         if (el.value === "o" || el.value === "O" || el.value === "0") {
+            prevOverwrite(el);
             return [el.id, el.value];
-        } else {
-            console.log('Your turn! Please enter a O to keep playing.');
         }
     };
 
+    // Computer outputs an "X" in a random empty space
     const computerTurn = () => {
         const newX = state.tictactoe.fillSpace('x');
         tictactoeView.showXSpace(newX[0], newX[1]);
+        let el = document.getElementById(`col${newX[0]}row${newX[1]}`);
+        prevOverwrite(el);
     };
+
+    // Prevent changes to already existing entries
+    const prevOverwrite = (el) => {
+        let keepVal = el.value;
+        console.log(el);
+        el.removeEventListener('input', (e) => newSpace(e));
+        el.addEventListener('input', (e) => {
+            el.value = keepVal;
+            console.log('Hey tricky... what are you up to? Please enter an O in an empty space for your turn.');
+
+        });
+    }
+
 
     // Get and store new space 
     const newSpace = (e) => {
@@ -39,16 +53,24 @@ const controlPlay = async () => {
             console.log(newSpaceInput[0]);
             newCol = newSpaceInput[0].slice(3, 4);
             newRow = newSpaceInput[0].slice(7, 8);
-            newVal = newSpaceInput[1];
+            if (newSpaceInput[1] === 'o' || 
+                newSpaceInput[1] === 'O' || 
+                newSpaceInput[1] === '0' ) {
+                newVal = newSpaceInput[1];
+            }
             state.tictactoe.fillSpace(newVal, newCol, newRow); 
             console.log('state after: ', state.tictactoe.game);
         }
         computerTurn();
     }
 
-    try {
+    const newGame = () => {
         tictactoeView.setup(base.axes);
         state.tictactoe.setup();
+    }
+
+    try {
+        newGame();
         console.log('state setup: ', state.tictactoe.game);
         // Populate with first "X"
         computerTurn();

@@ -76,14 +76,7 @@ export default class Tictactoe {
             col = Math.floor(Math.random() * this.game[row].length);
         }
  
-        // If empty space, populate with "X" or "O"
-        if (this.game[row][col] == '')  {
-            this.game[row][col] = val;
-        } else if (this.game[row][col] === 'x' || this.game[row][col] === 'o'){
-            console.log('Hey tricky, no changing your entries. Let\'s play again.');
-            // TODO
-            this.setup();
-        }
+        this.game[row][col] = val;
 
         this.isWinner(val);
 
