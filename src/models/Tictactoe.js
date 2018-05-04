@@ -4,11 +4,24 @@ export default class Tictactoe {
     constructor() {
             this.game = [[]];
             this.game.length = base.axes;
-    }
+            this.status = {
+                x: [
+                    ['across', 0],
+                    ['down', 0],
+                    ['diagNeg', 0],
+                    ['diagPos', 0]
+                ], 
+                o: [
+                    ['across', 0],
+                    ['down', 0],
+                    ['diagNeg', 0],
+                    ['diagPos', 0]
+                ] 
+            }    
+        }
 
     setup() {
         // Set empty tic-tac-toe board
-
         return new Promise (resolve => {
             for (var i = 0; i < base.axes; i++) {
                 this.game[i] = ['', '', ''];
@@ -18,9 +31,42 @@ export default class Tictactoe {
         });
     }
 
+    updateStatus(val) {
+        console.log('update status');
+        for (let r = 0; r < this.game[0].length; r++) {
+            // Reset across winner count
+            this.status[val][0][1] = 0;
+            for (let c = 0; c < this.game[r].length; c++) {
+                if (this.game[r][c] === val) {
+                    this.status[val][0][1]++;
+                    console.log(this.status[val][0][1]);
+                    // Check for across winner
+                    // if (winCountY === 3) {
+                    //     console.log(`${val} is the WINNER ACROSS!`);
+                    //     return; 
+                //     } else if (x === y) {
+                //     // Check for diagonol with negative slope winner
+                //         winCountDiagNeg++;
+                //         // console.log(' 1st: ', y, ' 2nd: ', x, ' val: ', val);
+                //         if (winCountDiagNeg === 3) {
+                //             console.log(`${val} is the WINNER DIAGONOL NEGATIVE!`);
+                //             return;
+                //         }
+                    // }
+                }    
+                // if (this.game[y][x] === val) {
+                // // Check for down winner
+                //     winCountX++;
+                //     if (winCountX === 3) {
+                //         console.log(`${val} is the WINNER DOWN!`);
+                //         return;
+                //     }    
+                // } 
+            }    
+        }        
+    }
 
     isWinner(val) {
-       
         let winCountDiagNeg = 0;
         let winCountDiagPos = 0;
 
@@ -76,15 +122,22 @@ export default class Tictactoe {
             col = Math.floor(Math.random() * this.game[row].length);
         }
  
-        this.game[row][col] = val;
+        console.log(`FILLSPACE FN: Row: ${row} Col: ${col} Val: ${val}`);
+        console.log('FILLSPACE FN: ', this.game);
+        if (this.game[row][col] === '') {
+            this.game[row][col] = val;
+        } else {
+            console.log('space taken, redoing');
+            this.fillSpace(val);
+        }
 
-        this.isWinner(val);
+        // this.updateStatus(val);
+        // this.isWinner(val);
 
         return [col, row];
         // return new Promise (resolve => {
         //     resolve(this.game);
         // });
     }
-
 }   
 

@@ -19,5 +19,5 @@ export const setup = (num) => {
 
 export const showXSpace = (col, row) => {
     document.getElementById(`col${col}row${row}`).value = 'x';
-    console.log('col: ', col, 'row: ', row);
+    // console.log('col: ', col, 'row: ', row);
 };

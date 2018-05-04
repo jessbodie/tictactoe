@@ -2,6 +2,7 @@ console.log('Index.js started');
 import Tictactoe from './models/Tictactoe';
 import * as tictactoeView from './views/tictactoeView';
 import * as base from './views/base';
+import './scss/main.scss';
 
 
 const state = {};
@@ -30,10 +31,10 @@ const controlPlay = async () => {
     // Prevent changes to already existing entries
     const prevOverwrite = (el) => {
         let keepVal = el.value;
-        console.log(el);
         el.removeEventListener('input', (e) => newSpace(e));
         el.addEventListener('input', (e) => {
             el.value = keepVal;
+            el.setAttribute(readonly, 'readonly');
             console.log('Hey tricky... what are you up to? Please enter an O in an empty space for your turn.');
 
         });
@@ -71,10 +72,9 @@ const controlPlay = async () => {
 
     try {
         newGame();
-        console.log('state setup: ', state.tictactoe.game);
         // Populate with first "X"
         computerTurn();
-        console.log('state setup: ', state.tictactoe.game);
+        // console.log('state setup: ', state.tictactoe.game);
 
         // Add listeners to handle user input
         var inputsDivArr = document.querySelectorAll('.board__space');
