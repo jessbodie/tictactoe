@@ -3,6 +3,7 @@ import * as base from '../views/base';
 export default class Tictactoe {
     constructor() {
             this.game = [[]];
+            this.newX = [];
             this.game.length = base.axes;
             this.status = {
                 x: [
@@ -22,7 +23,7 @@ export default class Tictactoe {
 
     setup() {
         // Set empty tic-tac-toe board
-        return new Promise (resolve => {
+        return new Promise ((resolve, reject) => {
             for (var i = 0; i < base.axes; i++) {
                 this.game[i] = ['', '', ''];
             }
@@ -114,7 +115,7 @@ export default class Tictactoe {
     }
 
     fillSpace(val, col, row) {
-        // If no row or col specified, place in random
+        // If no row or col specified, assign a random
         if (row === undefined) {
             row = Math.floor(Math.random() * Math.floor(this.game.length));
         }
@@ -126,15 +127,16 @@ export default class Tictactoe {
         console.log('FILLSPACE FN: ', this.game);
         if (this.game[row][col] === '') {
             this.game[row][col] = val;
+            this.newX = [row, col];
+            return this.game;
         } else {
-            console.log('space taken, redoing');
-            this.fillSpace(val);
+            console.log(`Row: ${row} Col: ${col} space taken, redoing`);
+            this.game = this.fillSpace(val);
         }
 
         // this.updateStatus(val);
         // this.isWinner(val);
 
-        return [col, row];
         // return new Promise (resolve => {
         //     resolve(this.game);
         // });

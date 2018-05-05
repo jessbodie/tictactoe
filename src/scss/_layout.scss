@@ -16,14 +16,16 @@
     align-content: start;
     width: 92vmin;
     margin: 0 auto;
-  
     background: radial-gradient(ellipse at 50%, $color-gray 50%, $color-white);
+    filter: drop-shadow(3px 3px 0.5rem rgba($color-gray, .4));
+    border-radius: 2px;
 
     &__space {
         padding: 1rem;
-        background: radial-gradient(circle at 50%, $color-tan-lt 60%, $color-blue-lt);
+        background: radial-gradient(circle at 50%, $color-tan-lt 50%, $color-blue-lt);
         font-family: 'Acme', sans-serif;
         opacity: .9;
+        border-radius: 2px;
 
         input {
             outline: 0px;
@@ -37,7 +39,7 @@
             opacity: .75;
             background: transparent;
             text-transform: uppercase;
-            transition: 1s opacity;
+            text-shadow: 3px 3px 0.5rem rgba($color-gray, .5);
         }
 
         

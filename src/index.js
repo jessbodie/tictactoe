@@ -22,9 +22,12 @@ const controlPlay = async () => {
 
     // Computer outputs an "X" in a random empty space
     const computerTurn = () => {
-        const newX = state.tictactoe.fillSpace('x');
-        tictactoeView.showXSpace(newX[0], newX[1]);
-        let el = document.getElementById(`col${newX[0]}row${newX[1]}`);
+        // state.tictactoe.game = 
+        state.tictactoe.game = state.tictactoe.fillSpace('x');
+        let newXrow = state.tictactoe.newX[0];
+        let newXcol = state.tictactoe.newX[1];
+        tictactoeView.showXSpace(newXcol, newXrow);
+        let el = document.getElementById(`col${newXcol}row${newXrow}`);
         prevOverwrite(el);
     };
 
@@ -59,7 +62,7 @@ const controlPlay = async () => {
                 newSpaceInput[1] === '0' ) {
                 newVal = newSpaceInput[1];
             }
-            state.tictactoe.fillSpace(newVal, newCol, newRow); 
+            state.tictactoe.game = state.tictactoe.fillSpace(newVal, newCol, newRow); 
             console.log('state after: ', state.tictactoe.game);
         }
         computerTurn();
@@ -97,10 +100,7 @@ window.addEventListener('load', controlPlay);
 
 
 // Display congrats/sorry UI
-
 // Play again
-
-
 
 // 0,0  1,0  2,0  3,0
 // 0,1  1,1  2,1  3,1
