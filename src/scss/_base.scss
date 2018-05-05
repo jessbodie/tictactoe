@@ -12,22 +12,28 @@ html {
   font-size: calc(6.5px + .66vw);
   // font-size: 62.5%; // 1rem = 10px
   width: 100%;
-  height: 100%;
 }
 
 body {
-    // min-width: $app-min-width;
-    // max-width: $app-max-width;
     margin: 0 auto;
     color: $color-black;
-    position: fixed; // testing
-    overflow: hidden; // testing
     -webkit-text-size-adjust: 100%;
     width: 100%;
-    height: 100%;
+    font-family: 'Acme', sans-serif;
   }
 
   h1 {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 10vmin;
+    color: $color-gray;
+    line-height: 1;
+  }
+
+  footer {
     font-family: 'Montserrat', sans-serif;
-    color: $color-black;
+    text-align: center;
+    font-weight: normal;
+    margin-top: 1rem;
+    font-size: .8rem;
   }
