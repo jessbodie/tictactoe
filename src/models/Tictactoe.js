@@ -115,31 +115,31 @@ export default class Tictactoe {
     }
 
     fillSpace(val, col, row) {
-        // If no row or col specified, assign a random
-        if (row === undefined) {
-            row = Math.floor(Math.random() * Math.floor(this.game.length));
-        }
-        if (col === undefined) {
-            col = Math.floor(Math.random() * this.game[row].length);
-        }
- 
-        console.log(`FILLSPACE FN: Row: ${row} Col: ${col} Val: ${val}`);
-        console.log('FILLSPACE FN: ', this.game);
-        if (this.game[row][col] === '') {
-            this.game[row][col] = val;
-            this.newX = [row, col];
-            return this.game;
-        } else {
-            console.log(`Row: ${row} Col: ${col} space taken, redoing`);
-            this.game = this.fillSpace(val);
-        }
+        return new Promise ((resolve, reject) => {
+
+            // If no row or col specified, assign a random
+            if (row === undefined) {
+                row = Math.floor(Math.random() * Math.floor(this.game.length));
+            }
+            if (col === undefined) {
+                col = Math.floor(Math.random() * this.game[row].length);
+            }
+    
+            console.log(`FILLSPACE FN: Row: ${row} Col: ${col} Val: ${val}`);
+            if (this.game[row][col] === '') {
+                this.game[row][col] = val;
+                this.newX = [row, col];
+                console.log('FILLSPACE FN: ', this.game);
+                resolve(this.game);
+            } else {
+                console.log(`Row: ${row} Col: ${col} space taken, redoing`, this);
+                this.fillSpace(val).then();
+            }
+        });
+    }
 
         // this.updateStatus(val);
         // this.isWinner(val);
 
-        // return new Promise (resolve => {
-        //     resolve(this.game);
-        // });
-    }
 }   
 

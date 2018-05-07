@@ -22,24 +22,29 @@ const controlPlay = async () => {
 
     // Computer outputs an "X" in a random empty space
     const computerTurn = () => {
-        // state.tictactoe.game = 
-        state.tictactoe.game = state.tictactoe.fillSpace('x');
-        let newXrow = state.tictactoe.newX[0];
-        let newXcol = state.tictactoe.newX[1];
-        tictactoeView.showXSpace(newXcol, newXrow);
-        let el = document.getElementById(`col${newXcol}row${newXrow}`);
-        prevOverwrite(el);
+        setTimeout(() => {
+            // fillspace() returns promise, .then gets value 
+            state.tictactoe.fillSpace('x').then();
+
+            let newXrow = state.tictactoe.newX[0];
+            let newXcol = state.tictactoe.newX[1];
+            tictactoeView.showXSpace(newXcol, newXrow);
+            let el = document.getElementById(`col${newXcol}row${newXrow}`);
+            prevOverwrite(el);
+            console.log('inside computerturn', state.tictactoe.game);
+            return (state.tictactoe.game);
+        }, 500);
     };
 
-    // Prevent changes to already existing entries
+    // Prevent changes to already existing entries (prevent cheating)
     const prevOverwrite = (el) => {
         let keepVal = el.value;
         el.removeEventListener('input', (e) => newSpace(e));
         el.addEventListener('input', (e) => {
             el.value = keepVal;
-            el.setAttribute(readonly, 'readonly');
+            el.setAttribute('readonly', true);
+            // TODO UI
             console.log('Hey tricky... what are you up to? Please enter an O in an empty space for your turn.');
-
         });
     }
 
@@ -53,8 +58,8 @@ const controlPlay = async () => {
         let newCol = '';
         let newVal = '';
         if (e) {
+            // Get user's input and the space they input to
             const newSpaceInput = getInput(e.target);
-            console.log(newSpaceInput[0]);
             newCol = newSpaceInput[0].slice(3, 4);
             newRow = newSpaceInput[0].slice(7, 8);
             if (newSpaceInput[1] === 'o' || 
@@ -62,28 +67,32 @@ const controlPlay = async () => {
                 newSpaceInput[1] === '0' ) {
                 newVal = newSpaceInput[1];
             }
-            state.tictactoe.game = state.tictactoe.fillSpace(newVal, newCol, newRow); 
-            console.log('state after: ', state.tictactoe.game);
+            state.tictactoe.fillSpace(newVal, newCol, newRow).then(); 
         }
         computerTurn();
     }
 
+    // Draw grid and reset data grid
     const newGame = () => {
-        tictactoeView.setup(base.axes);
-        state.tictactoe.setup();
+
+        return new Promise ((resolve, reject) => {
+                tictactoeView.setup(base.axes);
+                resolve(state.tictactoe.setup());
+        });
     }
 
     try {
-        newGame();
-        // Populate with first "X"
-        computerTurn();
-        // console.log('state setup: ', state.tictactoe.game);
+        // Return promises of updated data set to prevent errors
+        state.tictactoe.game = await newGame(); 
 
         // Add listeners to handle user input
         var inputsDivArr = document.querySelectorAll('.board__space');
         for  (let i = 0; i < inputsDivArr.length; i++) {
             inputsDivArr[i].children[0].addEventListener('input', (e) => newSpace(e));
         }
+
+        // Populate with first "X"
+        computerTurn(); 
     } catch (err) {
         console.log(err);
     }
