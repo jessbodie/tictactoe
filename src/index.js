@@ -1,4 +1,4 @@
-console.log('Index.js started');
+console.log('Let\'s play Tic Tac Toe!');
 import Tictactoe from './models/Tictactoe';
 import * as tictactoeView from './views/tictactoeView';
 import * as base from './views/base';
@@ -10,28 +10,50 @@ const state = {};
 const controlPlay = async () => {
 
     state.tictactoe = new Tictactoe();
-    // const allSpaces = state.tictactoe;
 
-    // Get user's "O" input
+    // Get user's "o" input
     const getInput = (el) => {
-        if (el.value === "o" || el.value === "O" || el.value === "0") {
+        if (el.value === 'o' || el.value === 'O' || el.value === '0') {
+            let userVal = 'o';
             prevOverwrite(el);
-            return [el.id, el.value];
+            return [el.id, userVal];
         }
     };
 
+    // Check state for winners in any direction
+    const isWinner = (val) => { 
+        let statusVal = state.tictactoe.getStatus(val);
+        // If any in status are 3, return true, else return false
+        for (let [direction, total] of statusVal) {
+            if (total === 3) {
+                // TODO Show Winning UI
+                console.log(`WINNER: ${val}: ${direction}, ${total}`);
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Computer outputs an "X" in a random empty space
     const computerTurn = () => {
+        // Timer for improved UX
         setTimeout(() => {
             // fillspace() returns promise, .then gets value 
             state.tictactoe.fillSpace('x').then();
 
+            // Location for new "X"
             let newXrow = state.tictactoe.newX[0];
             let newXcol = state.tictactoe.newX[1];
             tictactoeView.showXSpace(newXcol, newXrow);
+
             let el = document.getElementById(`col${newXcol}row${newXrow}`);
             prevOverwrite(el);
-            console.log('inside computerturn', state.tictactoe.game);
+
+            // Check if winner 
+            if (isWinner('x')) {
+                return;
+            }
+
             return (state.tictactoe.game);
         }, 500);
     };
@@ -62,19 +84,18 @@ const controlPlay = async () => {
             const newSpaceInput = getInput(e.target);
             newCol = newSpaceInput[0].slice(3, 4);
             newRow = newSpaceInput[0].slice(7, 8);
-            if (newSpaceInput[1] === 'o' || 
-                newSpaceInput[1] === 'O' || 
-                newSpaceInput[1] === '0' ) {
-                newVal = newSpaceInput[1];
-            }
+            newVal = newSpaceInput[1];
             state.tictactoe.fillSpace(newVal, newCol, newRow).then(); 
+            // Check if winner 
+            if (isWinner(newVal)) {
+                return;
+            }
         }
         computerTurn();
     }
 
     // Draw grid and reset data grid
     const newGame = () => {
-
         return new Promise ((resolve, reject) => {
                 tictactoeView.setup(base.axes);
                 resolve(state.tictactoe.setup());
@@ -82,7 +103,7 @@ const controlPlay = async () => {
     }
 
     try {
-        // Return promises of updated data set to prevent errors
+        // Return promises of updated data set 
         state.tictactoe.game = await newGame(); 
 
         // Add listeners to handle user input
@@ -93,13 +114,12 @@ const controlPlay = async () => {
 
         // Populate with first "X"
         computerTurn(); 
+
     } catch (err) {
         console.log(err);
     }
 
-
     return;
-
 }
 
 window.addEventListener('load', controlPlay);
@@ -107,10 +127,11 @@ window.addEventListener('load', controlPlay);
 
 
 
-
-// Display congrats/sorry UI
-// Play again
-
+// 2.0 IDEAS
+// "AI" So computer makes smart decisions if it has 2 in a row
+// ComputerTurn takes 2nd turn, depending on winner
+// Track consecutive wins by user
+// Presumed data model (potentially add more rows/cols)
 // 0,0  1,0  2,0  3,0
 // 0,1  1,1  2,1  3,1
 // 0,2  1,2  2,2  3,2
