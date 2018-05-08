@@ -41,7 +41,7 @@ const controlPlay = async () => {
             // fillspace() returns promise, .then gets value 
             state.tictactoe.fillSpace('x').then();
 
-            // Location for new "X"
+            // Display - Location for new "X"
             let newXrow = state.tictactoe.newX[0];
             let newXcol = state.tictactoe.newX[1];
             tictactoeView.showXSpace(newXcol, newXrow);
