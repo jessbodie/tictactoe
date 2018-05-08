@@ -20,5 +20,5 @@ export const setup = (num) => {
 // Show computer's turn
 export const showXSpace = (col, row) => {
     document.getElementById(`col${col}row${row}`).value = 'x';
-    // console.log('col: ', col, 'row: ', row);
+    document.getElementById(`col${col}row${row}`).className='board__space--anim';
 };

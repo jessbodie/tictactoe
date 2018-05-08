@@ -20,6 +20,7 @@ body {
     -webkit-text-size-adjust: 100%;
     width: 100%;
     font-family: 'Acme', sans-serif;
+    background: radial-gradient(ellipse at 50%, $color-white 30%, $color-tan-lt);
   }
 
   h1 {
@@ -29,7 +30,9 @@ body {
     color: $color-gray;
     line-height: 1;
     text-shadow: 3px 3px 0.5rem rgba($color-gray, .4);
-
+    opacity: 0;
+    animation: growBounce 500ms ease-in forwards;
+    animation-delay: $anim-1;
   }
 
   footer {

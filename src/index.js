@@ -55,7 +55,7 @@ const controlPlay = async () => {
             }
 
             return (state.tictactoe.game);
-        }, 500);
+        }, 1000);
     };
 
     // Prevent changes to already existing entries (prevent cheating)
