@@ -3,8 +3,10 @@ export const axes = 3;
 
 export const elements = {
     board: document.getElementById('board'),
-    message: document.getElementById('message'),
-    content: document.getElementById('content')
+    // message: document.getElementById('message'),
+    content: document.getElementById('content'),
+    close: document.getElementById('message__close'),
+    play: document.getElementById('message__play')
 };
 
 export const msgs = {

@@ -18,16 +18,27 @@ export default class Tictactoe {
                     ['diagNeg', 0],
                     ['diagPos', 0]
                 ] 
-            }    
+            };    
+            this.numPlays = 0;
         }
 
+    // Set empty data for tic-tac-toe board
     setup() {
-        // Set empty tic-tac-toe board
         return new Promise ((resolve, reject) => {
             for (var i = 0; i < base.axes; i++) {
                 this.game[i] = ['', '', ''];
             }
             resolve(this.game);
+        });
+    }
+
+    // Reset status/winnings data
+    resetStatus() {
+        this.status['x'].forEach((val, key) => {
+            val[1] = 0;
+        });
+        this.status['o'].forEach((val, key) => {
+            val[1] = 0;
         });
     }
 
@@ -79,6 +90,19 @@ export default class Tictactoe {
 
     getStatus(val) {
         return this.status[val];
+    }
+
+    // Track number of plays (in case no winner)
+    getNumPlays() {
+        this.numPlays = 0;
+        for (let r = 0; r < this.game[0].length; r++) {
+            for (let c = 0; c < this.game[r].length; c++) {
+                if (this.game[r][c] !== '') {
+                    this.numPlays++;
+                }
+            }    
+        }
+        return this.numPlays;
     }
 
     fillSpace(val, col, row) {

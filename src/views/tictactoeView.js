@@ -17,10 +17,12 @@ export const setup = (num) => {
     return true;
 };
 
-// Show computer's turn
-export const showXSpace = (col, row) => {
-    document.getElementById(`col${col}row${row}`).value = 'x';
-    document.getElementById(`col${col}row${row}`).className='board__space--anim';
+// Show value in specified space
+export const showSpace = (col, row, spaceVal) => {
+    document.getElementById(`col${col}row${row}`).value = spaceVal;
+    if (spaceVal === 'x') {
+        document.getElementById(`col${col}row${row}`).className='board__space--anim';
+    }
 };
 
 // Show Game Over/Winner message
@@ -32,11 +34,12 @@ export const displayMess = (text, btnText) => {
             <div class="message__text" id="message__text">
             ${text}
             </div>
-            <div class="message__close"></div>
+            <div class="message__close" id="message__close"></div>
             <div class="message__play" id="message__play">${btnText}</div>
         </div>
        `;
     elements.content.insertAdjacentHTML('afterend', messageMarkup);
+
     return true;
 };
 

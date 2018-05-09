@@ -32,10 +32,15 @@ const controlPlay = async () => {
                 } else if (val === 'o') {
                     tictactoeView.displayMess(base.msgs.winnerText);
                 }
-                console.log(`WINNER: ${val}: ${direction}, ${total}`);
-                // TODO LOGIC FOR NO WINNER
+                // console.log(`WINNER: ${val}: ${direction}, ${total}`);
+           
                 return true;
             }
+        }
+        // If no winner, but board is full
+        if (state.tictactoe.getNumPlays() === 9) {
+            tictactoeView.displayMess(base.msgs.drawText);
+            return true;
         }
         return false;
     }
@@ -50,7 +55,7 @@ const controlPlay = async () => {
             // Display - Location for new "X"
             let newXrow = state.tictactoe.newX[0];
             let newXcol = state.tictactoe.newX[1];
-            tictactoeView.showXSpace(newXcol, newXrow);
+            tictactoeView.showSpace(newXcol, newXrow, 'x');
 
             let el = document.getElementById(`col${newXcol}row${newXrow}`);
             prevOverwrite(el);
@@ -61,7 +66,7 @@ const controlPlay = async () => {
             }
 
             return (state.tictactoe.game);
-        }, 1000);
+        }, 300);
     };
 
     // Prevent changes to already existing entries (prevent cheating)
@@ -100,6 +105,14 @@ const controlPlay = async () => {
         computerTurn();
     }
 
+    const addSpaceListeners = () => {
+        // Add listeners to handle user input
+        var inputsDivArr = document.querySelectorAll('.board__space');
+        for  (let i = 0; i < inputsDivArr.length; i++) {
+            inputsDivArr[i].children[0].addEventListener('input', (e) => newSpace(e));
+        };
+    }
+
     // Draw grid and reset data grid
     const newGame = () => {
         return new Promise ((resolve, reject) => {
@@ -108,15 +121,42 @@ const controlPlay = async () => {
         });
     }
 
+    // Remove Message, clear data, clear UI
+    const resetGame = async () => {
+        // Remove message
+        document.getElementById('message').remove();
+        // Clear Status data to track next winner
+        state.tictactoe.resetStatus();
+
+        // Clear UI
+        while(document.querySelector('.board__space')) {
+            document.querySelector('.board__space').remove();
+        }
+
+        // Reset data and UI of game
+        state.tictactoe.game = await newGame(); 
+        addSpaceListeners();
+        return new Promise ((resolve, reject) => {
+            resolve(state.tictactoe.game);
+        });
+    }
+
     try {
         // Return promises of updated data set 
         state.tictactoe.game = await newGame(); 
 
-        // Add listeners to handle user input
-        var inputsDivArr = document.querySelectorAll('.board__space');
-        for  (let i = 0; i < inputsDivArr.length; i++) {
-            inputsDivArr[i].children[0].addEventListener('input', (e) => newSpace(e));
-        }
+        // Listeners to handle user input
+        addSpaceListeners();
+
+        // Listeners for Win/Lose Message Box
+        document.getElementById('cont').addEventListener('click', async (e) => {
+            if (e.target.id === 'message__play' || 
+                e.target.id === 'message__close') {
+                    state.tictactoe.game = await resetGame();
+                    // Populate with first "X"
+                    computerTurn(); 
+            }
+        });       
 
         // Populate with first "X"
         computerTurn(); 
@@ -128,10 +168,15 @@ const controlPlay = async () => {
     return;
 }
 
+
 window.addEventListener('load', controlPlay);
 
-
-
+// TODO 1.0
+// PREVENT USER FROM ENTERING ANYTHING UNTIL AFTER COMPUTER ENTERS X
+// WHERE CURSOR IS SHOULD HAVE HOVER EFFECT
+// WINNING SPACES SHOULD HAVE WINNER UI EFFECT
+// PUT ON HEROKU
+// FAVICON
 
 // 2.0 IDEAS
 // "AI" So computer makes smart decisions if it has 2 in a row
@@ -142,3 +187,4 @@ window.addEventListener('load', controlPlay);
 // 0,1  1,1  2,1  3,1
 // 0,2  1,2  2,2  3,2
 // 0,3  1,3  2,2  3,3
+    
