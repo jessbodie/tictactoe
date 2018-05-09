@@ -36,11 +36,14 @@
               }
             }
     
-        &:hover,
-        &:focus,
-        &:active {
+        // &:hover,
+        // &:active {
+        //     background: radial-gradient(circle at 50%, $color-white 80%, $color-blue-lt);
+        // }    
+
+        &--white {
             background: radial-gradient(circle at 50%, $color-white 80%, $color-blue-lt);
-        }    
+        }
 
         input {
             outline: 0px;

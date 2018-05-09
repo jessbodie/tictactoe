@@ -43,3 +43,7 @@ export const displayMess = (text, btnText) => {
     return true;
 };
 
+// Show highlighted space as white
+export const makeSpaceWhite = (e) => {
+    e.target.parentNode.classList.add('board__space--white');
+};

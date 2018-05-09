@@ -73,12 +73,14 @@ const controlPlay = async () => {
     const prevOverwrite = (el) => {
         let keepVal = el.value;
         el.removeEventListener('input', (e) => newSpace(e));
-        el.addEventListener('input', (e) => {
+        el.removeEventListener('focus', tictactoeView.makeSpaceWhite); 
+        el.removeEventListener('mouseover', tictactoeView.makeSpaceWhite); 
+        el.addEventListener('focus', () => {
+            el.blur();
+        });
+        el.addEventListener('input', () => {
             el.value = keepVal;
             el.setAttribute('readonly', true);
-            // TODO UI
-            console.log('Hey tricky... what are you up to? Please enter an "O" in an empty space for your turn.');
-            console.log(base.msgs.cheaterText);
             tictactoeView.displayMess(base.msgs.cheaterText, 'OK');
         });
     }
@@ -112,8 +114,20 @@ const controlPlay = async () => {
         var inputsDivArr = document.querySelectorAll('.board__space');
         for  (let i = 0; i < inputsDivArr.length; i++) {
             inputsDivArr[i].children[0].addEventListener('input', (e) => newSpace(e));
-        };
+            inputsDivArr[i].children[0].addEventListener('focus', tictactoeView.makeSpaceWhite); 
+            inputsDivArr[i].children[0].addEventListener('mouseover', tictactoeView.makeSpaceWhite); 
+            inputsDivArr[i].children[0].addEventListener('blur', () => {
+                inputsDivArr[i].children[0].parentNode.classList.remove('board__space--white');
+            }); 
+            inputsDivArr[i].children[0].addEventListener('mouseleave', () => {
+                inputsDivArr[i].children[0].parentNode.classList.remove('board__space--white');
+            }); 
+        }
     }
+
+    // const makeSpaceWhite = (e) => {
+    //     e.target.parentNode.classList.add('board__space--white');
+    // }
 
     // Draw grid and reset data grid
     const newGame = () => {
@@ -174,12 +188,13 @@ const controlPlay = async () => {
 window.addEventListener('load', controlPlay);
 
 // TODO 1.0
-// WHERE CURSOR IS SHOULD HAVE HOVER EFFECT
+// CLICK WILL GENERATE O
 // WINNING SPACES SHOULD HAVE WINNER UI EFFECT
 // PUT ON HEROKU
 // FAVICON
 
 // 2.0 IDEAS
+// Make "O" appear on click only
 // "AI" So computer makes smart decisions if it has 2 in a row
 // ComputerTurn takes 2nd turn, depending on winner
 // Track consecutive wins by user
