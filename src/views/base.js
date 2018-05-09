@@ -12,5 +12,6 @@ export const elements = {
 export const msgs = {
     winnerText: 'Congratulations! You\'re the big winner. Alert the twittersphere!',
     loserText: 'Oh man... You let a computer beat you. Demand justice!',
-    drawText: 'Zoikes... a draw?! You can\'t let that stand...'
+    drawText: 'Zoikes... a draw?! You can\'t let that stand...',
+    cheaterText: 'Hey tricky... what are you up to? Please enter an "O" in an empty space for your turn.'
 };

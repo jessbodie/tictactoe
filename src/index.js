@@ -66,7 +66,7 @@ const controlPlay = async () => {
             }
 
             return (state.tictactoe.game);
-        }, 300);
+        }, 250);
     };
 
     // Prevent changes to already existing entries (prevent cheating)
@@ -77,7 +77,9 @@ const controlPlay = async () => {
             el.value = keepVal;
             el.setAttribute('readonly', true);
             // TODO UI
-            console.log('Hey tricky... what are you up to? Please enter an O in an empty space for your turn.');
+            console.log('Hey tricky... what are you up to? Please enter an "O" in an empty space for your turn.');
+            console.log(base.msgs.cheaterText);
+            tictactoeView.displayMess(base.msgs.cheaterText, 'OK');
         });
     }
 
@@ -172,7 +174,6 @@ const controlPlay = async () => {
 window.addEventListener('load', controlPlay);
 
 // TODO 1.0
-// PREVENT USER FROM ENTERING ANYTHING UNTIL AFTER COMPUTER ENTERS X
 // WHERE CURSOR IS SHOULD HAVE HOVER EFFECT
 // WINNING SPACES SHOULD HAVE WINNER UI EFFECT
 // PUT ON HEROKU
