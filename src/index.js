@@ -25,9 +25,15 @@ const controlPlay = async () => {
         let statusVal = state.tictactoe.getStatus(val);
         // If any in status are 3, return true, else return false
         for (let [direction, total] of statusVal) {
+            // If there is a winner, show winner/loser message
             if (total === 3) {
-                // TODO Show Winning UI
+                if (val === 'x') {
+                    tictactoeView.displayMess(base.msgs.loserText);
+                } else if (val === 'o') {
+                    tictactoeView.displayMess(base.msgs.winnerText);
+                }
                 console.log(`WINNER: ${val}: ${direction}, ${total}`);
+                // TODO LOGIC FOR NO WINNER
                 return true;
             }
         }

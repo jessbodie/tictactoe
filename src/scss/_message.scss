@@ -1,0 +1,113 @@
+.message {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    justify-self: center;
+    align-self: center;
+    display: grid;
+    grid-template-columns: auto 6vmin;
+    grid-template-rows: auto auto;
+    grid-gap: 2vmin;
+
+    background: radial-gradient(ellipse at 50%, $color-gray 30%, rgba($color-gray, .8));
+    color: $color-tan-lt;
+    width: 80%;
+    border-radius: 2px;
+    font-size: 4vmin;
+    z-index: $z-msg;
+    font-family: 'Montserrat', sans-serif;
+    padding: 2vmin 3vmin;
+    filter: drop-shadow(3px 3px 0.5rem rgba($color-gray, .6));
+    border-radius: 2px;
+    // opacity: .95;
+    opacity: 0;
+
+    &--anim {
+        animation: growBounce 1s ease-in forwards;
+    }
+
+    &__text {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        justify-self: start;
+        align-self: start;
+    }
+
+    &__close {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+        justify-self: center;
+        align-self: start;
+
+        background: radial-gradient(circle at 50%, $color-tan-lt 30%, rgba($color-tan-lt, .8));
+        color: $color-black;
+        border-radius: 50%;
+        font-weight: bolder;
+        width: 6vmin;
+        height: 6vmin;
+        text-align: center;
+        font-size: 4vmin;
+        filter: drop-shadow(3px 3px 0.5rem rgba($color-black, .3));
+
+        &:hover,
+        &:active,
+        &:focus {
+            background: radial-gradient(circle at 50%, $color-black 30%, rgba($color-black, .8));
+            filter: drop-shadow(3px 3px 0.5rem rgba($color-tan-lt, .5));
+
+            &:before,
+            &:after {
+                background-color: $color-white;
+            }
+        }
+
+        &:before,
+        &:after {
+            width: 2px;
+            height: 4vmin;
+            background-color: $color-gray;
+            content:"";
+            display: block;
+        }
+
+        &:before {
+            transform: rotate(-45deg);
+            position: absolute;
+            top: 15%;
+            left: 50%;
+        }
+
+        &:after {
+            transform: rotate(45deg);
+            position: absolute;
+            top: 15%;
+            left: 50%;
+        }
+    }
+
+    &__play {
+        grid-column: 1 / 3;
+        grid-row: 2 / 3;
+        justify-self: center;
+        align-self: center;
+
+        background: radial-gradient(ellipse at 50%, $color-white 30%, rgba($color-white, .8));
+        color: $color-black;
+        border-radius: 2px;
+        font-weight: bolder;
+        text-align: center;
+        width: auto;
+        display: inline-block;
+        padding: 1vmin 2vmin;
+        margin: 1vmin auto;
+        filter: drop-shadow(3px 3px 0.5rem rgba($color-black, .3));
+
+        &:hover,
+        &:active,
+        &:focus {
+            background: radial-gradient(ellipse at 50%, $color-black 30%, rgba($color-black, .8));
+            color: $color-white;
+            filter: drop-shadow(3px 3px 0.5rem rgba($color-tan-lt, .5));
+        }
+    }
+  
+}

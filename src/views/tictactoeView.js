@@ -22,3 +22,21 @@ export const showXSpace = (col, row) => {
     document.getElementById(`col${col}row${row}`).value = 'x';
     document.getElementById(`col${col}row${row}`).className='board__space--anim';
 };
+
+// Show Game Over/Winner message
+export const displayMess = (text, btnText) => {
+    btnText = btnText || 'Play Again';
+    var messageMarkup; 
+    messageMarkup = `
+        <div class="message message--anim" id="message">
+            <div class="message__text" id="message__text">
+            ${text}
+            </div>
+            <div class="message__close"></div>
+            <div class="message__play" id="message__play">${btnText}</div>
+        </div>
+       `;
+    elements.content.insertAdjacentHTML('afterend', messageMarkup);
+    return true;
+};
+
