@@ -45,6 +45,10 @@
             background: radial-gradient(circle at 50%, $color-white 80%, $color-blue-lt);
         }
 
+        &--winner {
+            background: red;
+        }
+
         input {
             outline: 0px;
             border: 0px;

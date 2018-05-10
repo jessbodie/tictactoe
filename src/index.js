@@ -3,7 +3,8 @@ import Tictactoe from './models/Tictactoe';
 import * as tictactoeView from './views/tictactoeView';
 import * as base from './views/base';
 import './scss/main.scss';
-
+// import './favicon/favicon.ico';
+require.context('./favicon', false, /^\.\//);
 
 const state = {};
 

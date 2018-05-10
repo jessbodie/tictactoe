@@ -16,7 +16,8 @@ module.exports = {
         new CleanWebpackPlugin('dist', {} ),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './src/index.html'
+            template: './src/index.html',
+            favicon: 'src/favicon/favicon.ico'
         }),
         new MiniCssExtractPlugin({
             filename: './css/style.css',
@@ -37,7 +38,11 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use:  ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
-            }    
+            },
+            {
+                test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.xml$|\.webmanifest$/,
+                loader: 'file-loader?name=favicon/[name].[ext]'  
+            }
         ]
     }
 };
