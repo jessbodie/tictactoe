@@ -181,7 +181,6 @@ const controlPlay = async () => {
 window.addEventListener('load', controlPlay);
 
 // TODO 1.0
-// CLICK WILL GENERATE O
 // WINNING SPACES SHOULD HAVE WINNER UI EFFECT
 // PUT ON HEROKU
 // FAVICON
