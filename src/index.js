@@ -11,15 +11,6 @@ const controlPlay = async () => {
 
     state.tictactoe = new Tictactoe();
 
-    // Get user's "o" input
-    const getInput = (el) => {
-        if (el.value === 'o' || el.value === 'O' || el.value === '0') {
-            let userVal = 'o';
-            prevOverwrite(el);
-            return [el.id, userVal];
-        }
-    };
-
     // Check state for winners in any direction
     const isWinner = (val) => { 
         let statusVal = state.tictactoe.getStatus(val);
@@ -72,7 +63,7 @@ const controlPlay = async () => {
     // Prevent changes to already existing entries (prevent cheating)
     const prevOverwrite = (el) => {
         let keepVal = el.value;
-        el.removeEventListener('input', (e) => newSpace(e));
+        el.removeEventListener('click', newSpace);
         el.removeEventListener('focus', tictactoeView.makeSpaceWhite); 
         el.removeEventListener('mouseover', tictactoeView.makeSpaceWhite); 
         el.addEventListener('focus', () => {
@@ -86,21 +77,25 @@ const controlPlay = async () => {
     }
 
 
-    // Get and store new space 
+    // Get, store, and show new space 
     const newSpace = (e) => {
         // For IE compatibility
         // e = e || window.event;
         // e.target = e.target || e.srcElement;
+        e.target.blur();
         let newRow = '';
         let newCol = '';
         let newVal = '';
         if (e) {
-            // Get user's input and the space they input to
-            const newSpaceInput = getInput(e.target);
-            newCol = newSpaceInput[0].slice(3, 4);
-            newRow = newSpaceInput[0].slice(7, 8);
-            newVal = newSpaceInput[1];
-            state.tictactoe.fillSpace(newVal, newCol, newRow).then(); 
+            // Get user's space and update board data and UI
+            newCol = e.target.id.slice(3, 4);
+            newRow = e.target.id.slice(7, 8);
+            newVal = 'o';
+            state.tictactoe.fillSpace(newVal, newCol, newRow).then();
+            tictactoeView.showSpace(newCol, newRow, newVal);
+             
+            // Call error handling, UI for filled in spaces
+            prevOverwrite(e.target);
             // Check if winner 
             if (isWinner(newVal)) {
                 return;
@@ -113,7 +108,9 @@ const controlPlay = async () => {
         // Add listeners to handle user input
         var inputsDivArr = document.querySelectorAll('.board__space');
         for  (let i = 0; i < inputsDivArr.length; i++) {
-            inputsDivArr[i].children[0].addEventListener('input', (e) => newSpace(e));
+            inputsDivArr[i].children[0].addEventListener('click', newSpace);
+
+            // UI Listeners
             inputsDivArr[i].children[0].addEventListener('focus', tictactoeView.makeSpaceWhite); 
             inputsDivArr[i].children[0].addEventListener('mouseover', tictactoeView.makeSpaceWhite); 
             inputsDivArr[i].children[0].addEventListener('blur', () => {
@@ -124,10 +121,6 @@ const controlPlay = async () => {
             }); 
         }
     }
-
-    // const makeSpaceWhite = (e) => {
-    //     e.target.parentNode.classList.add('board__space--white');
-    // }
 
     // Draw grid and reset data grid
     const newGame = () => {
