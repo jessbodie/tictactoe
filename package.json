@@ -7,7 +7,8 @@
     "node": "10.0.0"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "express": "^4.16.3"
   },
   "devDependencies": {
     "autoprefixer": "^8.4.1",
@@ -30,9 +31,9 @@
   },
   "scripts": {
     "dev": "webpack --mode development",
-    "build": "webpack --mode production",
+    "build": "webpack --config webpack.prod.config.js",
     "start:dev": "webpack-dev-server --mode development --open",
-    "start": ""
+    "start": "npm run build && NODE_ENV=production node server.js"
   },
   "author": "Jess Bodie Richards",
   "license": "MIT"
