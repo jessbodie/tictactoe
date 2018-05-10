@@ -3,7 +3,6 @@ import Tictactoe from './models/Tictactoe';
 import * as tictactoeView from './views/tictactoeView';
 import * as base from './views/base';
 import './scss/main.scss';
-// import './favicon/favicon.ico';
 require.context('./favicon', false, /^\.\//);
 
 const state = {};
@@ -183,15 +182,13 @@ window.addEventListener('load', controlPlay);
 
 // TODO 1.0
 // WINNING SPACES SHOULD HAVE WINNER UI EFFECT
-// PUT ON HEROKU
 // FAVICON
 
 // 2.0 IDEAS
-// Make "O" appear on click only
 // "AI" So computer makes smart decisions if it has 2 in a row
 // ComputerTurn takes 2nd turn, depending on winner
 // Track consecutive wins by user
-// Presumed data model (potentially add more rows/cols)
+// Add more rows/cols:
 // 0,0  1,0  2,0  3,0
 // 0,1  1,1  2,1  3,1
 // 0,2  1,2  2,2  3,2
