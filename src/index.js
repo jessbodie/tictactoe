@@ -182,7 +182,6 @@ window.addEventListener('load', controlPlay);
 
 // TODO 1.0
 // WINNING SPACES SHOULD HAVE WINNER UI EFFECT
-// FAVICON
 
 // 2.0 IDEAS
 // "AI" So computer makes smart decisions if it has 2 in a row
