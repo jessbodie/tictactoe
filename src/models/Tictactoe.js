@@ -32,7 +32,6 @@ export default class Tictactoe {
 
     // Update how close to winning user and computer is
     updateStatus(val) {
-        console.log('inside updateStatus fn');
         // Reset prev winning array
         this.resetStatus(val);
         let curDiagPos = []; 
@@ -59,8 +58,8 @@ export default class Tictactoe {
         if (this.checkWinner(val, curDiagNeg)) {
             return;
         }
-        console.log('curAcross: ', val, curAcross);
-        console.log('curDiagNeg: ', val, curDiagNeg);
+        // console.log('curAcross: ', val, curAcross);
+        // console.log('curDiagNeg: ', val, curDiagNeg);
         
         // Redo loop in column format to check for DOWN winner
         for (let c = 0; c < this.game[0].length; c++) {
@@ -76,7 +75,7 @@ export default class Tictactoe {
                 return;
             }
         }    
-        console.log('curDown: ', val, curDown);
+        // console.log('curDown: ', val, curDown);
 
         // Check for DIAGONOL (positive slope) winner
         let c = this.game[0].length - 1;
@@ -86,7 +85,7 @@ export default class Tictactoe {
             } 
             c--;
         }        
-        console.log('curDiagPos: ', val, curDiagPos);
+        // console.log('curDiagPos: ', val, curDiagPos);
         if (this.checkWinner(val, curDiagPos)) {
             return;
         }
@@ -96,7 +95,7 @@ export default class Tictactoe {
     checkWinner(val, arr) {
         if (arr.length === 3) {
             this.status[val] = arr;
-            console.log('3 met: ', val, this.status[val]);
+            // console.log('3 met: ', val, this.status[val]);
             return true;
         }
         return false;

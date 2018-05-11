@@ -1,3 +1,5 @@
+// Basic clasic Tic Tac Toe game for JavaScript fun
+// Jess Bodie Richards 
 console.log('Let\'s play Tic Tac Toe!');
 import Tictactoe from './models/Tictactoe';
 import * as tictactoeView from './views/tictactoeView';
@@ -16,8 +18,6 @@ const controlPlay = async () => {
         let statusVal = state.tictactoe.getStatus(val);
         // If any in status are 3, return true, else return false
         if (statusVal.length === 3) {
-            console.log('state.tictactoe.status.x', state.tictactoe.status.x);
-            console.log('state.tictactoe.status.o', state.tictactoe.status.o);
             // If there is a winner, show winner/loser message
             if (val === 'x') {
                 tictactoeView.makeSpaceWinner(state.tictactoe.status.x);
@@ -185,9 +185,6 @@ const controlPlay = async () => {
 
 
 window.addEventListener('load', controlPlay);
-
-// TODO 1.0
-// UI Show active effect when clicking on button (touch)
 
 // 2.0 IDEAS
 // Refine UI of Message close button
