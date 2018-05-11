@@ -14,7 +14,7 @@ export default class Tictactoe {
 
     // Set empty data for tic-tac-toe board
     setup() {
-        return new Promise ((resolve, reject) => {
+        return new Promise ((resolve) => {
             for (var i = 0; i < base.axes; i++) {
                 this.game[i] = ['', '', ''];
             }
@@ -119,7 +119,7 @@ export default class Tictactoe {
     }
 
     fillSpace(val, col, row) {
-        return new Promise ((resolve, reject) => {
+        return new Promise ((resolve) => {
             // If no row or col specified, assign a rand row/col
             if (row === undefined) {
                 row = Math.floor(Math.random() * Math.floor(this.game.length));

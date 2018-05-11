@@ -130,7 +130,7 @@ const controlPlay = async () => {
 
     // Draw grid and reset data grid
     const newGame = () => {
-        return new Promise ((resolve, reject) => {
+        return new Promise ((resolve) => {
                 tictactoeView.setup(base.axes);
                 resolve(state.tictactoe.setup());
         });
@@ -151,7 +151,7 @@ const controlPlay = async () => {
         // Reset data and UI of game
         state.tictactoe.game = await newGame(); 
         addSpaceListeners();
-        return new Promise ((resolve, reject) => {
+        return new Promise ((resolve) => {
             resolve(state.tictactoe.game);
         });
     }

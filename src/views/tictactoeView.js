@@ -1,4 +1,3 @@
-import * as base from './base';
 import { elements } from './base';
 
 export const setup = (num) => {
