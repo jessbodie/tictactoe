@@ -115,10 +115,14 @@ const controlPlay = async () => {
             // UI Listeners
             inputsDivArr[i].children[0].addEventListener('focus', tictactoeView.makeSpaceWhite); 
             inputsDivArr[i].children[0].addEventListener('mouseover', tictactoeView.makeSpaceWhite); 
+            inputsDivArr[i].children[0].addEventListener('touchstart', tictactoeView.makeSpaceWhite); 
             inputsDivArr[i].children[0].addEventListener('blur', () => {
                 inputsDivArr[i].children[0].parentNode.classList.remove('board__space--white');
             }); 
             inputsDivArr[i].children[0].addEventListener('mouseleave', () => {
+                inputsDivArr[i].children[0].parentNode.classList.remove('board__space--white');
+            }); 
+            inputsDivArr[i].children[0].addEventListener('touchend', () => {
                 inputsDivArr[i].children[0].parentNode.classList.remove('board__space--white');
             }); 
         }
