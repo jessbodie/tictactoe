@@ -15,18 +15,20 @@ const controlPlay = async () => {
     const isWinner = (val) => { 
         let statusVal = state.tictactoe.getStatus(val);
         // If any in status are 3, return true, else return false
-        for (let [direction, total] of statusVal) {
+        if (statusVal.length === 3) {
+            console.log('state.tictactoe.status.x', state.tictactoe.status.x);
+            console.log('state.tictactoe.status.o', state.tictactoe.status.o);
             // If there is a winner, show winner/loser message
-            if (total === 3) {
-                if (val === 'x') {
-                    tictactoeView.displayMess(base.msgs.loserText);
-                } else if (val === 'o') {
-                    tictactoeView.displayMess(base.msgs.winnerText);
-                }
-                // console.log(`WINNER: ${val}: ${direction}, ${total}`);
-           
-                return true;
+            if (val === 'x') {
+                tictactoeView.makeSpaceWinner(state.tictactoe.status.x);
+                tictactoeView.displayMess(base.msgs.loserText);
+            } else if (val === 'o') {
+                tictactoeView.makeSpaceWinner(state.tictactoe.status.o);
+                tictactoeView.displayMess(base.msgs.winnerText);
             }
+            // console.log(`WINNER: ${val}: ${direction}, ${total}`);
+        
+            return true;
         }
         // If no winner, but board is full
         if (state.tictactoe.getNumPlays() === 9) {
@@ -57,7 +59,7 @@ const controlPlay = async () => {
             }
 
             return (state.tictactoe.game);
-        }, 250);
+        }, 200);
     };
 
     // Prevent changes to already existing entries (prevent cheating)
@@ -181,9 +183,10 @@ const controlPlay = async () => {
 window.addEventListener('load', controlPlay);
 
 // TODO 1.0
-// WINNING SPACES SHOULD HAVE WINNER UI EFFECT
+// UI Show active effect when clicking on button (touch)
 
 // 2.0 IDEAS
+// Refine UI of Message close button
 // "AI" So computer makes smart decisions if it has 2 in a row
 // ComputerTurn takes 2nd turn, depending on winner
 // Track consecutive wins by user

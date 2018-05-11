@@ -34,7 +34,9 @@ export const displayMess = (text, btnText) => {
             <div class="message__text" id="message__text">
             ${text}
             </div>
-            <div class="message__close" id="message__close"></div>
+            <div class="message__close" id="message__close">
+                <div class="message__close-line"></div>
+            </div>
             <div class="message__play" id="message__play">${btnText}</div>
         </div>
        `;
@@ -46,4 +48,11 @@ export const displayMess = (text, btnText) => {
 // Show highlighted space as white
 export const makeSpaceWhite = (e) => {
     e.target.parentNode.classList.add('board__space--white');
+};
+
+// Show winner spaces as highlighted
+export const makeSpaceWinner = (winSpaces) => {
+    for (let i = 0; i < winSpaces.length; i++) {
+        document.getElementById(`col${winSpaces[i][1]}row${winSpaces[i][0]}`).parentNode.classList.add('board__space--winner');
+    }
 };

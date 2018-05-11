@@ -6,18 +6,8 @@ export default class Tictactoe {
             this.newX = [];
             this.game.length = base.axes;
             this.status = {
-                x: [
-                    ['across', 0],
-                    ['down', 0],
-                    ['diagNeg', 0],
-                    ['diagPos', 0]
-                ], 
-                o: [
-                    ['across', 0],
-                    ['down', 0],
-                    ['diagNeg', 0],
-                    ['diagPos', 0]
-                ] 
+                x: [[]],
+                o: [[]]
             };    
             this.numPlays = 0;
         }
@@ -34,58 +24,82 @@ export default class Tictactoe {
 
     // Reset status/winnings data
     resetStatus() {
-        this.status['x'].forEach((val, key) => {
-            val[1] = 0;
-        });
-        this.status['o'].forEach((val, key) => {
-            val[1] = 0;
-        });
+        this.status = {
+            x: [[]],
+            o: [[]]
+        };    
     }
 
     // Update how close to winning user and computer is
     updateStatus(val) {
-        // Reset diagonol winners
-        this.status[val][2][1] = 0;
-        this.status[val][3][1] = 0;
+        console.log('inside updateStatus fn');
+        // Reset prev winning array
+        this.resetStatus(val);
+        let curDiagPos = []; 
+        let curDiagNeg = []; 
+        let curAcross = [[]];
+        let curDown = [[]];
         
         // Loop through data to check for ACROSS winners
         for (let r = 0; r < this.game[0].length; r++) {
-            let curAcross = 0;
+            curAcross[r] = [];
             for (let c = 0; c < this.game[r].length; c++) {
                 if (this.game[r][c] === val) {
-                    curAcross++;
-                    if (curAcross > this.status[val][0][1]) {
-                        this.status[val][0][1] = curAcross;
-                    }
+                    curAcross[r].push([r,c]);
                 } 
                 // Check for DIAGONOL (negative slope) winner   
                 if (this.game[r][c] === val && r === c) {
-                    this.status[val][2][1]++;
+                    curDiagNeg.push([r,c]);
                     } 
             }    
-        }        
+            if (this.checkWinner(val, curAcross[r])) {
+                return;
+            }
+        }
+        if (this.checkWinner(val, curDiagNeg)) {
+            return;
+        }
+        console.log('curAcross: ', val, curAcross);
+        console.log('curDiagNeg: ', val, curDiagNeg);
+        
         // Redo loop in column format to check for DOWN winner
         for (let c = 0; c < this.game[0].length; c++) {
             // Reset down winner count
-            let curDown = 0;
+            curDown[c] = [];
             for (let r = 0; r < this.game[c].length; r++) {
                 // Check for down winner and update win count
                 if (this.game[r][c] === val) {
-                    curDown++;
+                    curDown[c].push([r,c]);
                 } 
             }
-            if (curDown > this.status[val][1][1]) {
-                this.status[val][1][1] = curDown;
+            if (this.checkWinner(val, curDown[c])) {
+                return;
             }
         }    
+        console.log('curDown: ', val, curDown);
+
         // Check for DIAGONOL (positive slope) winner
-        let max = this.game[0].length - 1;
+        let c = this.game[0].length - 1;
         for (let r = 0; r < this.game[0].length; r++) {
-            if (this.game[r][max] === val) {
-                this.status[val][3][1]++;
+            if (this.game[r][c] === val) {
+                curDiagPos.push([r,c]);
             } 
-            max--;
+            c--;
         }        
+        console.log('curDiagPos: ', val, curDiagPos);
+        if (this.checkWinner(val, curDiagPos)) {
+            return;
+        }
+    }
+
+    // Check winners 
+    checkWinner(val, arr) {
+        if (arr.length === 3) {
+            this.status[val] = arr;
+            console.log('3 met: ', val, this.status[val]);
+            return true;
+        }
+        return false;
     }
 
     getStatus(val) {
